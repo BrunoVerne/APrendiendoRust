@@ -7,7 +7,24 @@ struct Point {
 #[derive(Debug)]
 enum Message {
     // TODO: Define the different variants used below.
+    struct Resize{
+        width: u32,
+        height: u32,
+    },
+
+    struct Move{
+        Point
+    },
+
+    struct Echo{
+        message: String
+    },
+
+    struct ChangeColor(u8,u8,u8),
+
+    Quit
 }
+
 
 impl Message {
     fn call(&self) {
