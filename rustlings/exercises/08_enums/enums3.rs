@@ -31,8 +31,8 @@ impl State {
         self.position = point;
     }
 
-    fn echo(&mut self, s: String) {
-        self.message = s;
+    fn echo(&mut self, x: String) {
+        self.message = x;
     }
 
     fn change_color(&mut self, red: u8, green: u8, blue: u8) {
@@ -46,7 +46,17 @@ impl State {
     fn process(&mut self, message: Message) {
         // TODO: Create a match expression to process the different message
         // variants using the methods defined above.
+        match message{
+            Message::Resize{width, height} => self.resize(width, height),
+            Message::Move(point) => self.move_position(point),
+            Message::Echo(x) => self.echo(x),
+            Message::ChangeColor(red,green,blue) => self.change_color(red,green,blue),
+            Message::Quit => self.quit()
+
+        }
+                            
     }
+
 }
 
 fn main() {
