@@ -11,6 +11,11 @@ pub fn ejecutar_comando<W: Write>(
 ) -> Result<(), MiniKVError> {
     match comando {
         Comandos::Set { key, value } => {
+            if value.is_none() {
+                if !store.get(&key).map_or(false, |v| v.is_some()) {
+                    return Err(MiniKVError::NotFound);
+                }
+            }
             escribir_log(&key, &value)?;
             store.insert(key, value);
             writeln!(out, "OK").map_err(|e| MiniKVError::ErrorIO(e.to_string()))?;
