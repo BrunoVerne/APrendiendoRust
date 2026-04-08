@@ -1,7 +1,16 @@
-[workspace]
-members = [
-    "minikv",
-    "server",
-]
+[package]
+name = "minikv"
+version = "0.1.0"
+edition = "2024"
 
-resolver = "3"
+[lib]
+name = "minikv"
+path = "src/lib.rs"
+
+[[bin]]
+name = "minikv-server"
+path = "bin/minikv-server.rs"
+
+[[bin]]
+name = "minikv-client"
+path = "bin/minikv-client.rs"

@@ -1,8 +1,0 @@
-set set "a""a"  "1""1"
-
-set set set "a""b"
- "clave""2"
- "valor"
-set "clave"
-set "clave" "viejo"
-set "clave" "nuevo"
