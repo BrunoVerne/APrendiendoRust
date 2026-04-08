@@ -1,4 +1,5 @@
 //! Representa los posibles errores que puede producir MiniKV.
+#[derive(Debug)]
 pub enum MiniKVError {
     /// La clave solicitada no existe o no tiene valor en el store.
     NotFound,
@@ -20,19 +21,18 @@ pub enum MiniKVError {
 
     /// Error de entrada/salida con su descripción.
     ErrorIO(String),
-    
-    //Error de direccion dada por cliente
-    ClientSocketBinding, 
 
-    
+    //Error de direccion dada por cliente
+    ClientSocketBinding,
+
     //Error de direccion dada por servidor
-    ServerSocketBinding, 
+    ServerSocketBinding,
 
     InvalidArgs,
     /// El servidor tarda demasiado en contestar.
     Timeout,
     /// La conexión se cierra de forma repentina.
-    ConnectionClosed
+    ConnectionClosed,
 }
 
 impl std::fmt::Display for MiniKVError {
@@ -44,15 +44,15 @@ impl std::fmt::Display for MiniKVError {
             MiniKVError::MissingArgument => write!(f, "ERROR: MISSING ARGUMENT"),
             MiniKVError::UnknownCommand => write!(f, "ERROR: UNKNOWN COMMAND"),
             // Errores del server — formato nuevo con comillas
-            MiniKVError::InvalidDataFile => write!(f, "ERROR \"INVALID DATA FILE\""),
-            MiniKVError::InvalidLogFile => write!(f, "ERROR \"INVALID LOG FILE\""),
-            MiniKVError::ServerSocketBinding => write!(f, "ERROR \"SERVER SOCKET BINDING\""),
-            MiniKVError::InvalidArgs => write!(f, "ERROR \"INVALID ARGS\""),
+            MiniKVError::InvalidDataFile => write!(f, "ERROR: INVALID DATA FILE"),
+            MiniKVError::InvalidLogFile => write!(f, "ERROR: INVALID LOG FILE"),
+            MiniKVError::ServerSocketBinding => write!(f, "ERROR: SERVER SOCKET BINDING"),
+            MiniKVError::InvalidArgs => write!(f, "ERROR: INVALID ARGS"),
             // Errores de comunicacion — formato nuevo con comillas
-            MiniKVError::ClientSocketBinding => write!(f, "ERROR \"CLIENT SOCKET BINDING\""),
-            MiniKVError::Timeout => write!(f, "ERROR \"TIMEOUT\""),
-            MiniKVError::ConnectionClosed => write!(f, "ERROR \"CONNECTION CLOSED\""),
-            MiniKVError::ErrorIO(e) => write!(f, "ERROR \"{}\"", e),
+            MiniKVError::ClientSocketBinding => write!(f, "ERROR: CLIENT SOCKET BINDING"),
+            MiniKVError::Timeout => write!(f, "ERROR: TIMEOUT"),
+            MiniKVError::ConnectionClosed => write!(f, "ERROR: CONNECTION CLOSED"),
+            MiniKVError::ErrorIO(e) => write!(f, "ERROR {}", e),
         }
     }
 }

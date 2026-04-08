@@ -1,6 +1,7 @@
-[package]
-name = "minikv"
-version = "0.1.0"
-edition = "2024"
+[workspace]
+members = [
+    "minikv",
+    "server",
+]
 
-[dependencies]
+resolver = "3"

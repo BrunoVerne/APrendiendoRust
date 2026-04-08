@@ -3,47 +3,55 @@ use crate::errores::MiniKVError;
 
 pub fn parsear_comandos(args: Vec<String>) -> Result<Comandos, MiniKVError> {
     match args.get(1).map(|s| s.as_str()) {
-        Some("set") => {
-            let key = args.get(2).ok_or(MiniKVError::MissingArgument)?;
-            match args.get(3) {
-                Some(value) => {
-                    if args.get(4).is_some() {
-                        return Err(MiniKVError::ExtraArgument);
-                    }
-                    Ok(Comandos::Set {
-                        key: key.to_owned(),
-                        value: Some(value.to_owned()),
-                    })
-                }
-                None => Ok(Comandos::Set {
-                    key: key.to_owned(),
-                    value: None,
-                }),
-            }
-        }
-        Some("get") => {
-            let key = args.get(2).ok_or(MiniKVError::MissingArgument)?;
-            if args.get(3).is_some() {
-                return Err(MiniKVError::ExtraArgument);
-            }
-            Ok(Comandos::Get {
-                key: key.to_owned(),
-            })
-        }
-        Some("length") => {
-            if args.get(2).is_some() {
-                return Err(MiniKVError::ExtraArgument);
-            }
-            Ok(Comandos::Length)
-        }
-        Some("snapshot") => {
-            if args.get(2).is_some() {
-                return Err(MiniKVError::ExtraArgument);
-            }
-            Ok(Comandos::Snapshot)
-        }
+        Some("set") => parsear_set(&args),
+        Some("get") => parsear_get(&args),
+        Some("length") => parsear_length(&args),
+        Some("snapshot") => parsear_snapshot(&args),
         _ => Err(MiniKVError::UnknownCommand),
     }
+}
+
+fn parsear_set(args: &[String]) -> Result<Comandos, MiniKVError> {
+    let key = args.get(2).ok_or(MiniKVError::MissingArgument)?;
+    match args.get(3) {
+        Some(value) => {
+            if args.get(4).is_some() {
+                return Err(MiniKVError::ExtraArgument);
+            }
+            Ok(Comandos::Set {
+                key: key.to_owned(),
+                value: Some(value.to_owned()),
+            })
+        }
+        None => Ok(Comandos::Set {
+            key: key.to_owned(),
+            value: None,
+        }),
+    }
+}
+
+fn parsear_get(args: &[String]) -> Result<Comandos, MiniKVError> {
+    let key = args.get(2).ok_or(MiniKVError::MissingArgument)?;
+    if args.get(3).is_some() {
+        return Err(MiniKVError::ExtraArgument);
+    }
+    Ok(Comandos::Get {
+        key: key.to_owned(),
+    })
+}
+
+fn parsear_length(args: &[String]) -> Result<Comandos, MiniKVError> {
+    if args.get(2).is_some() {
+        return Err(MiniKVError::ExtraArgument);
+    }
+    Ok(Comandos::Length)
+}
+
+fn parsear_snapshot(args: &[String]) -> Result<Comandos, MiniKVError> {
+    if args.get(2).is_some() {
+        return Err(MiniKVError::ExtraArgument);
+    }
+    Ok(Comandos::Snapshot)
 }
 
 #[cfg(test)]

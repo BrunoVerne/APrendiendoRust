@@ -1,12 +1,6 @@
-mod almacenamiento;
-mod comandos;
-mod ejecucion_comandos;
-mod errores;
-mod parseo_comandos;
-
-use almacenamiento::cargar_estado;
-use ejecucion_comandos::ejecutar_comando;
-use parseo_comandos::parsear_comandos;
+use minikv::almacenamiento::cargar_estado;
+use minikv::ejecucion_comandos::ejecutar_comando;
+use minikv::parseo_comandos::parsear_comandos;
 use std::collections::HashMap;
 use std::env;
 use std::io;
